@@ -1,0 +1,14 @@
+{
+    "dartimportsorter.sortOnSave": true,
+    "dart.flutterHotReloadOnSave": "allIfDirty",
+    "dart.lineLength": 111,
+    "editor.rulers": [150],
+
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "Dart-Code.dart-code",
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "explicit"
+        }
+    }
+}

@@ -28,3 +28,13 @@ class ModelSelectionChanged extends ChatEvent {
   @override
   List<Object?> get props => [modelName];
 }
+
+class LoadModelRequested extends ChatEvent {
+  const LoadModelRequested({required this.modelUri, required this.modelName});
+
+  final String modelUri;
+  final String modelName;
+
+  @override
+  List<Object?> get props => [modelUri, modelName];
+}

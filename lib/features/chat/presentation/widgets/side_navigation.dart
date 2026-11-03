@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../model_manager/presentation/pages/model_library_page.dart';
+
 import '../bloc/chat_bloc.dart';
 import '../bloc/chat_event.dart';
 
@@ -25,16 +27,12 @@ class SideNavigation extends StatelessWidget {
             children: [
               Icon(Icons.auto_awesome, color: colors.primary, size: 27),
               const SizedBox(width: 10),
-              const Text(
-                'Personal AI',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
-              ),
+              const Text('Personal AI', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
             ],
           ),
           const SizedBox(height: 28),
           FilledButton.tonalIcon(
-            onPressed: () =>
-                context.read<ChatBloc>().add(const NewConversationRequested()),
+            onPressed: () => context.read<ChatBloc>().add(const NewConversationRequested()),
             icon: const Icon(Icons.add),
             label: const Text('New chat'),
           ),
@@ -42,9 +40,12 @@ class SideNavigation extends StatelessWidget {
           Text('WORKSPACE', style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(height: 10),
           const _NavItem(icon: Icons.chat_bubble_outline, label: 'Chats'),
-          const _NavItem(
+          _NavItem(
             icon: Icons.smart_toy_outlined,
             label: 'Model library',
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ModelLibraryPage()));
+            },
           ),
           const _NavItem(icon: Icons.folder_open_outlined, label: 'Documents'),
           const _NavItem(icon: Icons.psychology_outlined, label: 'Memory'),
@@ -64,10 +65,11 @@ class SideNavigation extends StatelessWidget {
 }
 
 class _NavItem extends StatelessWidget {
-  const _NavItem({required this.icon, required this.label});
+  const _NavItem({required this.icon, required this.label, this.onTap});
 
   final IconData icon;
   final String label;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +78,12 @@ class _NavItem extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       leading: Icon(icon, size: 20),
       title: Text(label, style: const TextStyle(fontSize: 14)),
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('$label will be implemented in a later phase.'),
-          ),
-        );
-      },
+      onTap:
+          onTap ??
+          () {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('$label will be implemented later.')));
+          },
     );
   }
 }
